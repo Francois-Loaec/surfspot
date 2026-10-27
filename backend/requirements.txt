@@ -1,0 +1,5 @@
+# FastAPI fournit l'API web.
+fastapi
+
+# Uvicorn lance le serveur de développement FastAPI.
+uvicorn[standard]

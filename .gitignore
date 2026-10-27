@@ -1,0 +1,22 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Frontend
+node_modules/
+dist/
+
+# Base de donnees locale
+backend/data/*.db
+backend/data/*.sqlite
+backend/data/*.sqlite3
+
+# Fichiers secrets
+.env
+.env.*
+!.env.example
+
+# macOS
+.DS_Store
