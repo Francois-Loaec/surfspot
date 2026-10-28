@@ -57,6 +57,22 @@ jobs:
 
           Le code est publié. Le serveur change uniquement si vous lancez le workflow avec « Déployer ».
           ' "$GITHUB_SHA" "$IMAGE" "$DIGEST" >> "$GITHUB_STEP_SUMMARY"
+      - name: Diagnostic temporaire de l’encodage du jeton
+        if: github.event_name == 'workflow_dispatch' && inputs.deploy
+        env:
+          DEPLOY_TOKEN: ${{ secrets.IHME_DEPLOY_TOKEN }}
+        run: |
+          python3 - <<'PY'
+          import os
+
+          header = "Bearer " + os.environ.get("DEPLOY_TOKEN", "")
+          try:
+              header.encode("latin-1")
+          except UnicodeEncodeError:
+              print("caractère incompatible")
+          else:
+              print("encodage compatible")
+          PY
       - name: Déployer sur le serveur du cours
         if: github.event_name == 'workflow_dispatch' && inputs.deploy
         env:
