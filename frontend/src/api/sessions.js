@@ -1,3 +1,5 @@
+import API_BASE from './base.js'
+
 async function readResponse(response) {
   if (!response.ok) {
     let message = `Le serveur a répondu avec le code ${response.status}.`
@@ -19,11 +21,11 @@ async function readResponse(response) {
 }
 
 export async function fetchSessions() {
-  return readResponse(await fetch('/api/sessions'))
+  return readResponse(await fetch(`${API_BASE}/sessions`))
 }
 
 export async function createSession(session) {
-  return readResponse(await fetch('/api/sessions', {
+  return readResponse(await fetch(`${API_BASE}/sessions`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(session),
@@ -31,7 +33,7 @@ export async function createSession(session) {
 }
 
 export async function deleteSession(sessionId) {
-  return readResponse(await fetch(`/api/sessions/${sessionId}`, {
+  return readResponse(await fetch(`${API_BASE}/sessions/${sessionId}`, {
     method: 'DELETE',
   }))
 }

@@ -10,9 +10,15 @@ const frontendDist = path.resolve(__dirname, '../../../frontend/dist')
 const frontendIndex = path.join(frontendDist, 'index.html')
 
 app.use(express.json())
-app.use('/api', healthRoutes)
-app.use('/api', spotRoutes)
-app.use('/api', sessionRoutes)
+for (const apiPrefix of ['/api', '/surfspot/api']) {
+  app.use(apiPrefix, healthRoutes)
+  app.use(apiPrefix, spotRoutes)
+  app.use(apiPrefix, sessionRoutes)
+}
+
+app.use('/surfspot/api', (request, response) => {
+  response.status(404).json({ detail: 'Route API introuvable.' })
+})
 
 app.use('/surfspot', express.static(frontendDist))
 
