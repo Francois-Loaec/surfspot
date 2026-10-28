@@ -5,11 +5,10 @@ export default defineConfig({
   plugins: [react()],
   server: {
     proxy: {
-      // Le navigateur appelle Vite ; Vite transmet cette requête à FastAPI.
+      // Le navigateur appelle Vite ; Vite transmet cette requête à Express.
       '/api': {
-        target: 'http://127.0.0.1:8000',
+        target: 'http://127.0.0.1:3000',
         changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/api/, ''),
       },
     },
   },

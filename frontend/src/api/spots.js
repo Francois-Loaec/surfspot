@@ -1,4 +1,4 @@
-/** Récupère la liste des spots auprès de l'API FastAPI via le proxy Vite. */
+/** Récupère la liste des spots auprès de l'API Express via le proxy Vite. */
 export async function fetchSpots() {
   const response = await fetch('/api/spots')
 

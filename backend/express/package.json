@@ -1,0 +1,14 @@
+{
+  "name": "surfspot-express-api",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Backend Express de SurfSpot avec PostgreSQL",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js"
+  },
+  "dependencies": {
+    "express": "^5.3.0",
+    "pg": "^8.13.1"
+  }
+}

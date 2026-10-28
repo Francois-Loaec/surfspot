@@ -20,3 +20,12 @@ backend/data/*.sqlite3
 
 # macOS
 .DS_Store
+
+# Fichiers privés d'accès et de déploiement
+acces-*.txt
+acces_*.txt
+access-*.txt
+access_*.txt
+acces*.curl
+access*.curl
+deploy*.curl

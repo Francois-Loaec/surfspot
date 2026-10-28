@@ -29,7 +29,7 @@ export default function App() {
         if (isMounted) setSpots(data)
       })
       .catch(() => {
-        if (isMounted) setError("Impossible de joindre SurfSpot. Vérifiez que le backend FastAPI fonctionne.")
+        if (isMounted) setError("Impossible de joindre SurfSpot. Vérifiez que le backend Express fonctionne.")
       })
       .finally(() => {
         if (isMounted) setLoading(false)
