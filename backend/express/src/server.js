@@ -6,8 +6,8 @@ const port = 3000
 
 initializeDatabase()
   .then(() => {
-    app.listen(port, () => {
-      console.log(`SurfSpot API écoute sur le port ${port}.`)
+    app.listen(port, '0.0.0.0', () => {
+      console.log(`SurfSpot API écoute sur 0.0.0.0:${port}.`)
     })
   })
   .catch(async (error) => {
