@@ -1,5 +1,6 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { fetchSpots } from './api/spots.js'
+import SpotDetail from './components/SpotDetail.jsx'
 import SpotCard from './components/SpotCard.jsx'
 import SurfSessions from './components/SurfSessions.jsx'
 
@@ -18,8 +19,11 @@ function readFavorites() {
 export default function App() {
   const [spots, setSpots] = useState([])
   const [favorites, setFavorites] = useState(readFavorites)
+  const [selectedSpot, setSelectedSpot] = useState(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
+
+  const closeSpotDetail = useCallback(() => setSelectedSpot(null), [])
 
   useEffect(() => {
     let isMounted = true
@@ -54,21 +58,27 @@ export default function App() {
   return (
     <main className="page-shell">
       <header className="hero">
+        <img
+          className="hero__background-image"
+          src={`${import.meta.env.BASE_URL}images/hero-surf-generated.png`}
+          alt=""
+          aria-hidden="true"
+        />
         <nav className="top-nav" aria-label="Navigation principale">
           <a className="brand" href="#accueil" aria-label="SurfSpot, accueil">
             <span className="brand__mark" aria-hidden="true">≈</span> surfspot
           </a>
-          <span className="nav-note"><span className="status-dot" /> Données de démonstration</span>
+          <span className="nav-note"><span className="status-dot" /> Prévisions modélisées</span>
         </nav>
 
         <div className="hero__content" id="accueil">
           <p className="eyebrow">Votre prochaine session commence ici</p>
-          <h1>La bonne vague,<br /><span>au bon endroit.</span></h1>
+          <h1>SurfSpot</h1>
+          <p className="hero__tagline">Trouve ta prochaine vague.</p>
           <p className="hero__description">Explorez les spots près de vous et trouvez les conditions qui vous donnent envie de vous jeter à l’eau.</p>
           <a className="hero__link" href="#spots">Explorer les spots <span aria-hidden="true">↓</span></a>
         </div>
 
-        <div className="hero__sun" aria-hidden="true" />
         <div className="wave-art" aria-hidden="true">
           <svg viewBox="0 0 1440 230" preserveAspectRatio="none">
             <path d="M0,95 C180,150 280,65 460,105 C650,148 740,222 930,152 C1120,82 1240,42 1440,100 L1440,230 L0,230 Z" />
@@ -88,7 +98,7 @@ export default function App() {
 
         <p className="demo-notice" role="note">
           <span className="demo-notice__mark" aria-hidden="true">i</span>
-          <span><strong>Données de démonstration — non actualisées.</strong> Les hauteurs de vagues, le vent et les conditions sont des exemples fixes, pas des prévisions en temps réel.</span>
+          <span><strong>Prévisions de modèles, non mesures sur la plage.</strong> Ouvrez une fiche pour consulter la dernière prévision disponible et son heure de validité.</span>
         </p>
 
         {loading && <p className="state-message" role="status">Chargement des spots…</p>}
@@ -104,6 +114,7 @@ export default function App() {
                 spot={spot}
                 isFavorite={favorites.includes(spot.id)}
                 onToggleFavorite={toggleFavorite}
+                onOpen={() => setSelectedSpot(spot)}
               />
             ))}
           </div>
@@ -111,6 +122,8 @@ export default function App() {
       </section>
 
       <SurfSessions spots={spots} spotsLoading={loading} spotsError={error} />
+
+      {selectedSpot && <SpotDetail spot={selectedSpot} onClose={closeSpotDetail} />}
 
       <footer className="footer">
         <a className="brand brand--footer" href="#accueil"><span className="brand__mark" aria-hidden="true">≈</span> surfspot</a>
